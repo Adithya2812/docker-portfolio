@@ -1,20 +1,3 @@
-# Docker Portfolio Website
-
-## Overview
-
-## Features
-
-## Technologies Used
-
-## Project Structure
-
-## Docker Commands
-
-## Screenshots
-
-## What I Learned
-
-## Author
 Features
 
 Static portfolio website
