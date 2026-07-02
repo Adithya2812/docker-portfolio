@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya | Cloud & DevOps Learner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- DESIGN SYSTEM & TOKENS --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #030712 0%, #0b1528 50%, #020617 100%);
+            --accent-cyan: #22d3ee;
+            --accent-blue: #3b82f6;
+            --gradient-text: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --glass-hover-border: rgba(34, 211, 238, 0.3);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --glow-shadow: 0 0 25px rgba(34, 211, 238, 0.15);
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* --- BASE STYLES & RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Subtle Grid Overlay Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255,255,255,0.005) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.005) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- GLOBAL LAYOUT COMPONENT --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Section Header Utility */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: var(--gradient-text);
+            border-radius: 2px;
+            margin: 12px auto 0 auto;
+        }
+
+        /* Glassmorphism Card Template */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--glass-hover-border);
+            box-shadow: var(--glow-shadow);
+        }
+
+        /* --- NAVIGATION BAR --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(3, 7, 18, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 120px;
+            padding-bottom: 60px;
+            text-align: center;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .badge {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            padding: 6px 16px;
+            border-radius: 100px;
+            display: inline-block;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-name {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 24px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #030712;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            padding: 14px 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(34, 211, 238, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(34, 211, 238, 0.4);
+        }
+
+        /* --- SKILLS SECTION --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .project-icon {
+            font-size: 1.75rem;
+            color: var(--accent-cyan);
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- LEARNING JOURNEY SECTION --- */
+        .journey-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quote-card {
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .quote-card::before {
+            content: "“";
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            font-size: 5rem;
+            color: rgba(34, 211, 238, 0.1);
+            font-family: serif;
+        }
+
+        .quote-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-desc {
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 12px 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-btn.email {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: var(--glass-border);
+            cursor: default;
+        }
+
+        .social-btn.email:hover {
+            transform: none;
+            border-color: var(--glass-border);
+            box-shadow: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- RESPONSIVE BREAKPOINTS --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Keeps it clean for a strict pure CSS layout on mobile */
+            }
+            
+            .hero-name {
+                font-size: 2.75rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .quote-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">aditya.devops</a>
+            <ul class="nav-links">
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="container hero-content">
+            <span class="badge">SYSTEM READY</span>
+            <h1 class="hero-name">Aditya</h1>
+            <h2 class="hero-title">Cloud & DevOps Learner</h2>
+            <p class="hero-subtitle">Building projects, learning cloud technologies, and growing every day.</p>
+            <a href="#projects" class="cta-btn">View Projects</a>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Toolbelt</h2>
+            <div class="skills-grid">
+                <div class="glass-card skill-card">
+                    <span class="skill-icon">☁️</span>
+                    <h3>AWS</h3>
+                </div>
+                <div class="glass-card skill-card">
+                    <span class="skill-icon">🏗️</span>
+                    <h3>Terraform</h3>
+                </div>
+                <div class="glass-card skill-card">
+                    <span class="skill-icon">🐋</span>
+                    <h3>Docker</h3>
+                </div>
+                <div class="glass-card skill-card">
+                    <span class="skill-icon">🐧</span>
+                    <h3>Linux</h3>
+                </div>
+                <div class="glass-card skill-card">
+                    <span class="skill-icon">🌿</span>
+                    <h3>Git & GitHub</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                
+                <div class="glass-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <span class="project-icon">⚡</span>
+                        </div>
+                        <h3>AWS EC2 Auto-Healing System</h3>
+                        <p>Designed a fault-tolerant system monitoring EC2 health states and automatically triggering re-provisions using CloudWatch alarms and Lambda actions.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">CloudWatch</span>
+                        <span class="tag">Lambda</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <span class="project-icon">⚙️</span>
+                        </div>
+                        <h3>Terraform AWS Production Stack</h3>
+                        <p>Architected modular Infrastructure as Code to deploy a highly available VPC network across multiple Availability Zones containing secure isolated subnets.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Terraform</span>
+                        <span class="tag">VPC</span>
+                        <span class="tag">IaC</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <span class="project-icon">📦</span>
+                        </div>
+                        <h3>Dockerized Portfolio Website</h3>
+                        <p>Containerized application web engines using optimized multi-stage build workflows to ensure ultra-low footprint sizes and fast deployment runtimes.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Docker</span>
+                        <span class="tag">Alpine Linux</span>
+                        <span class="tag">Nginx</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="journey">
+        <div class="container journey-wrapper">
+            <h2 class="section-title">Current Focus</h2>
+            <div class="glass-card quote-card">
+                <p class="quote-text">"Currently focused on mastering Cloud and DevOps through hands-on projects."</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container contact-wrapper">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="contact-desc">Let's collaborate or exchange knowledge. Feel free to ping me through any of the platforms below.</p>
+            <div class="contact-links">
+                <a href="https://github.com" target="_blank" class="glass-card social-btn">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="glass-card social-btn">
+                    <span>LinkedIn</span>
+                </a>
+                <div class="glass-card social-btn email">
+                    <span>aditya@email.com</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            &copy; 2026 Aditya. Built with plain HTML &amp; CSS.
+        </div>
+    </footer>
+
+</body>
+</html>
